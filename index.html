@@ -16,21 +16,26 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<title>Hangman bootcamp project | Kelly Davis</title>
  </head>
- <body onload="initialize();">
-	 <div class="container">
-		<div class="row">
+ <body>
+	 <div id="themepicker" class="container">
+    <div class="row">
         <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-6" id="themepicker_header">
             <h1>Choose a theme</h1>
         </div>
-    </div>  
+    </div> <!-- end header row -->  
     <div class="row">
-        <div id="themepicker" class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-4 col-xs-9 col-xs-offset-3">
+        <div id="themebuttons" class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-4 col-xs-9 col-xs-offset-3">
           <div class="btn-group" role="group" aria-label="...">
-              <button type="button" onclick="gameTracker.theme='sports';" class="btn btn-success">Sports</button>
-              <button type="button" onclick="gameTacker.theme='bands';" class="btn btn-danger">Bands</button>
+              <button type="button" onclick="initialize('sports');" class="btn btn-success">Sports</button>
+              <button type="button" onclick="initialize('bands');" class="btn btn-danger">Bands</button>
           </div>
         </div>
-    </div> <!-- end main row-->
-	 </div> <!-- end main container -->
+    </div> <!-- end button row-->
+  </div> <!-- end themepicker container -->
+
+  <div id="gameStage" class="container">
+
+  </div>
+
  </body>
  </html>
