@@ -5,6 +5,7 @@ var themes = {
 	sports: 
 		{
 		background:'sports-bg.jpg',
+		color:'green',
 		bank: {	
 			football:{image:'football.jpg'},
 			baseball:{image:'baseball.jpg'},
@@ -21,6 +22,7 @@ var themes = {
 	bands: 
 		{
 		background:'bands-bg.jpg',
+		color: 'red',
 		bank: {
 			'the beatles':{image:'beatles.jpg'},
 			'metallica':{image:'metallica.jpg'},
@@ -83,7 +85,14 @@ function initialize(theme) {
 	}
 	// choose a random word
 	gameTracker.word=bank[randNum(bank.length)];
-	
+	// make gameStage visible
+	stage = document.getElementById('gameStage');
+	stage.style.display = 'block';
+	// update stage header
+	var headerTheme = document.getElementById('themeName');
+	headerTheme.innerHTML=theme.toUpperCase();
+	headerTheme.style.color=themes[theme].color;
+
 }
 function randNum(max) {
    	var num = Math.floor((Math.random()*max));

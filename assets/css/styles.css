@@ -1,3 +1,26 @@
 #themepicker_header h1 {
 	text-align: center;
 }
+#gameStage {
+	width: 95%;
+	height: 95%;
+	margin: auto;
+	padding: 5px;
+	background-color: #fff;
+	position: relative;
+	top: 15px;
+	display: none;
+	opacity: .80;
+}
+#stageHeader {
+	text-align: center;
+}
+
+@media only screen and (min-width: 400px) {
+    #gameStage {
+        padding: 30px;
+        width: 80%;
+		height: 85%;
+		top: 5%;
+    }
+}
