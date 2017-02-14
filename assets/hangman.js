@@ -80,7 +80,7 @@ function initialize(theme) {
 	// how many words in this theme's bank?
 	// put words in an array
 	bank=[];
-	for (var key in gameTracker.theme) {
+	for (var key in gameTracker.theme.bank) {
 		bank.push(key);
 	}
 	// choose a random word
