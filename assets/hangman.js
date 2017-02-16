@@ -68,6 +68,14 @@ guessesRemaining: 15,
 letters: 0
 }
 
+word guess engine:
+
+use object that uses word characters as keys and initial values as "_":
+var wordChars = {};
+for (var i=0;i<gameTracker.word.length;i++)
+	wordChars[gameTracker.word[i]] = '_';
+
+
 */
 function initialize(theme) {
 	// hide themepicker
@@ -85,6 +93,7 @@ function initialize(theme) {
 	}
 	// choose a random word
 	gameTracker.word=bank[randNum(bank.length)];
+	console.log(gameTracker.word)
 	// make gameStage visible
 	stage = document.getElementById('gameStage');
 	stage.style.display = 'block';
@@ -93,8 +102,15 @@ function initialize(theme) {
 	headerTheme.innerHTML=theme.toUpperCase();
 	headerTheme.style.color=themes[theme].color;
 
+	// create array of wordChars with word chars as keys, boolean false (0) as initial values
+	var letters= {};
+	for (var i=0;i<gameTracker.word.length;i++) {
+		letters[i] = {[gameTracker.word[i]]:0};  // assign gameTracker.word letters as [literals] for keys
+	}
+	gameTracker.letters = letters;
+
 }
 function randNum(max) {
-   	var num = Math.floor((Math.random()*max));
+   	var num = Math.floor((Math.random()*max)+1);
    	return num;
  }
