@@ -1,6 +1,5 @@
-var gameTracker = {
+var gameTracker = {};
 
-}
 var themes = {
 	sports: 
 		{
@@ -12,7 +11,7 @@ var themes = {
 			cricket:{image:'cricket.jpg'},
 			soccer:{image:'soccer.jpg'},
 			basketball:{image:'basketball.jpg'},
-			hunting:{image:'hunting.jpg'},
+			skiing:{image:'hunting.jpg'},
 			racing:{image:'racing.jpg'},
 			softball:{image:'softball.jpg'},
 			volleyball:{image:'volleyball.jpg'},
@@ -93,16 +92,20 @@ function initialize(theme) {
 	}
 	// choose a random word
 	gameTracker.word=bank[randNum(bank.length)];
-	console.log(gameTracker.word)
-	// make gameStage visible
-	stage = document.getElementById('gameStage');
-	stage.style.display = 'block';
+	
+	// now we also have an image
+	gameTracker.image=gameTracker.theme.bank[gameTracker.word].image;
+	console.log(gameTracker.image);
+	
 	// update stage header
 	var headerTheme = document.getElementById('themeName');
 	headerTheme.innerHTML=theme.toUpperCase();
 	headerTheme.style.color=themes[theme].color;
 
-	// create array of wordChars with word chars as keys, boolean false (0) as initial values
+	// make gameStage visible
+	$("#gameStage").fadeIn(2000);
+
+// create array of wordChars with word chars as keys, boolean false (0) as initial values
 	var letters= {};
 	for (var i=0;i<gameTracker.word.length;i++) {
 		letters[i] = {[gameTracker.word[i]]:0};  // assign gameTracker.word letters as [literals] for keys
