@@ -11,7 +11,7 @@ var themes = {
 			cricket:{image:'cricket.jpg'},
 			soccer:{image:'soccer.jpg'},
 			basketball:{image:'basketball.jpg'},
-			skiing:{image:'hunting.jpg'},
+			skiing:{image:'skiing.jpg'},
 			racing:{image:'racing.jpg'},
 			softball:{image:'softball.jpg'},
 			volleyball:{image:'volleyball.jpg'},
@@ -95,7 +95,10 @@ function initialize(theme) {
 	
 	// now we also have an image
 	gameTracker.image=gameTracker.theme.bank[gameTracker.word].image;
-	console.log(gameTracker.image);
+
+	$("#gameImage").append('<img id="imageHint">');
+	$("#imageHint").attr("src","assets/images/"+gameTracker.image);	
+	
 	
 	// update stage header
 	var headerTheme = document.getElementById('themeName');
