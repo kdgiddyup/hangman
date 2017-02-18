@@ -34,22 +34,35 @@
   </div> <!-- end themepicker container -->
 
   <div id="gameStage" class="container">
-    <div class="row">
+    <div class="row jumbotron">
         <div class="col-lg-12" id="stageHeader">
             <h2>Welcome to <span id="themeName"></span> Hangman!</h2>
         </div>
     </div><!-- /header row-->
     <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-1" id="gameImage">
-
+      <div id="instructions" class="col-lg-12">
+        <p>Type a letter to start guessing the word. As you guess correctly, an image hint will appear.</p> 
+      </div>
+    </div>
+    <div class="row">  <!-- game area row -->
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-1" id="imageWrapper">
+        <div id="gameImage">
+          <!-- img goes here -->
+        </div>
+        <p>Watch here for your image hint!</p>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-sx-1" id="gameArea">
         <div class="row">
           <div id="guesses" class="col-lg-1">
+            <h2>Guesses remaining: <span id="remaining"></span></h2>
+            <h2>You've guessed:</h2>
+            <p id="guessed"></p>
           </div>
         </div> <!-- /guesses row-->
         <div class="row">
-          <div id="word" class="col-lg-1">
+          <div id="wordWrapper" class="col-lg-1">
+            <h2>Your word:</h2>
+            <div id="word"></div>
           </div>
         </div> <!-- /word row-->
      </div>

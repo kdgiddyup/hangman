@@ -10,7 +10,7 @@
 	position: relative;
 	top: 15px;
 	display: none;
-	opacity: .80;
+	opacity: .90;
 }
 #stageHeader {
 	text-align: center;
@@ -18,10 +18,13 @@
 #gameImage {
 	width: 100%;
 	max-width: 600px;
+	height: 0;
+	overflow: hidden;
 	
 }
 #imageHint {
-padding: 25% 0;
+padding: 0;
+width: 100%;
 }
 
 @media only screen and (min-width: 400px) {
