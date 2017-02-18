@@ -109,13 +109,28 @@ function initialize(theme) {
 	$("#gameStage").fadeIn(2000);
 
 // create array of wordChars with word chars as keys, boolean false (0) as initial values
-	var letters= {};
+	var letters= [];
 	for (var i=0;i<gameTracker.word.length;i++) {
 		letters[i] = {[gameTracker.word[i]]:0};  // assign gameTracker.word letters as [literals] for keys
+		if (gameTracker.word[i]==' ')  // but if there's a space in the word, make the value 1
+			letters[i] = {[gameTracker.word[i]]:1} 
 	}
 	gameTracker.letters = letters;
+	updateWord();
 
 }
+function updateWord() {
+	var wordDiv = document.getElementById('word');
+	wordDiv.innerHTML = '';
+	for (var i=0;i<gameTracker.letters.length;i++) {
+		var thisLetter = Object.keys(gameTracker.letters[i])[0];
+		if (gameTracker.letters[i].thisLetter)
+			wordDiv.innerHTML+=thisLetter
+		else 
+			wordDiv.innerHTML += '_';
+	}
+}
+
 function randNum(max) {
    	var num = Math.floor((Math.random()*max)+1);
    	return num;
