@@ -17,14 +17,14 @@
   	<title>Hangman bootcamp project | Kelly Davis</title>
  </head>
  <body>
-	 <div id="themepicker" class="container">
+	 <div id="themepicker" class="container jumbotron">
     <div class="row">
-        <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-2" id="themepicker_header">
+        <div class="col-lg-12" id="themepicker_header">
             <h1>Choose a theme</h1>
         </div>
     </div> <!-- end header row -->  
     <div class="row">
-        <div id="themebuttons" class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-4 col-xs-9 col-xs-offset-3">
+        <div id="themebuttons" class="col-lg-12">
           <div class="btn-group" role="group" aria-label="...">
               <button type="button" onclick="initialize('sports');" class="btn btn-success">Sports</button>
               <button type="button" onclick="initialize('bands');" class="btn btn-danger">Bands</button>
@@ -53,14 +53,14 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-sx-1" id="gameArea">
         <div class="row">
-          <div id="guesses" class="col-lg-1">
+          <div id="guesses" class="col-lg-12">
             <h2>Guesses remaining: <span id="remaining"></span></h2>
             <h2>You've guessed:</h2>
             <p id="guessed"></p>
           </div>
         </div> <!-- /guesses row-->
         <div class="row">
-          <div id="wordWrapper" class="col-lg-1">
+          <div id="wordWrapper" class="col-lg-12">
             <h2>Your word:</h2>
             <div id="word"></div>
           </div>

@@ -76,7 +76,7 @@ function initialize(theme) {
 	headerTheme.style.color=themes[theme].color;
 
 	// make gameStage visible
-	$("#gameStage").fadeIn(2000);
+	$("#gameStage").fadeIn('fast');
 
 // create array of wordChars with word chars as keys, boolean false (0) as initial values
 	var word=gameTracker.word.split('');
@@ -126,11 +126,15 @@ function updateWord() {
 	var newHeight = totalHeight*(correct/gameTracker.letters.length);
 	$("#gameImage").css("height",newHeight);
 
+	// if all letters are correct, launch "win" modal window
+	if (correct == gameTracker.letters.length)
+		gameOver('win');
+
 }
 
 function checkKey() {
+ 	var isMatch =0;
  	var userGuess = event.key.toLowerCase(); 	
- 	
  	// only counts as a guess if is letter
  	if (userGuess.length == 1 && userGuess.search(/[a-z]/) >-1) {
 
@@ -141,35 +145,32 @@ function checkKey() {
  				inList = 1;
 
  		// not guessed yet? add this one to the guessed letter array
- 		if (!inList) {
- 			gameTracker.guessed.push(userGuess)
+ 		if (!inList) 
+ 			gameTracker.guessed.push(userGuess);
 		
 			// now we have an updated array of guessed letters
  			// let's clear guessed letters div and update it
- 			$("#guessed").html(''); 
- 			for (var i;i<gameTracker.guessed.length;i++) 
+ 		$("#guessed").html(''); 
+ 		for (var i=0;i<gameTracker.guessed.length;i++) 
  				$("#guessed").append('<span class="letter">'+gameTracker.guessed[i]+'</span>');
 
-			}
  		// is this one of our word's letters?
- 		var badGuess=0;
- 		for (var i=0;i<gameTracker.letters.length;i++) {
- 			if (Object.keys(gameTracker.letters[i])[0]==userGuess) { 
- 				gameTracker.letters[i][userGuess] = 1;
- 				badGuess=0
- 				}
- 			else
- 				badGuess=1;
- 			}	
- 		updateWord();
  		
- 		if (badGuess) 
-			// letter was not a match; decrement guesses remaining
-			gameTracker.guesses--;
-			
+ 		for (var i=0;i<gameTracker.letters.length;i++) {
+ 			if (Object.keys(gameTracker.letters[i])[0]==userGuess) {
+ 				isMatch=1;
+ 				gameTracker.letters[i][userGuess] = 1;
+ 				}
+		 	}
+		 updateWord();
+ 		
+ 		// letter was not a match and not already guessed; decrement guesses remaining
+		if (!inList && !isMatch) 
+			gameTracker.guesses--;	
+ 		
 		// out of guesses? game over, man!
-		if (gameTracker.guesses < 0)
-			gameOver()
+		if (gameTracker.guesses  == 0)
+			gameOver('lose')
 
 		// otherwise, update guesses remaining
 		else 
@@ -177,9 +178,15 @@ function checkKey() {
  	}  // end is-valid-key code
 }  // end checkKey() function
 
-function gameOver(){
+function gameOver(state){
 	// create pop-up window that ends game 
-	alert('game over');
+	var overWindow = $('<div id="gameOver"></div>');
+	if (state == 'win')
+		$(overWindow).append('<p>You won! Nice job!</p>')
+	else if (state == 'lose')
+		$(overWindow).append('<p>Sorry, out of guesses!</p>');
+	$(overWindow).append('<button class="btn btn-danger">Start over</button>').on("click",function(){location.reload();});
+	$("body").append(overWindow);
 }
 
 function randNum(max) {
