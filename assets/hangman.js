@@ -1,5 +1,6 @@
 var gameTracker = {
-	guesses:15
+	guesses:15,
+	guessed:[]
 };
 var themes = {
 	sports: 
@@ -100,8 +101,8 @@ function initialize(theme) {
 
 
 function updateWord() {
-	var wordDiv = document.getElementById('word');
-	wordDiv.innerHTML = '';  // start with clear div each time
+	var wordDiv = $("#word");
+	$(wordDiv).html('');  // start with clear div each time
 	var correct=0;
 	// loop through gameTracker.letters array
 	for (var i=0;i<gameTracker.letters.length;i++) {  
@@ -109,13 +110,13 @@ function updateWord() {
 		// retrieve actual letter of word
 		var thisLetter = Object.keys(gameTracker.letters[i])[0];
 		
-		// value of the gameTracker.letters[i] object is boolean: true if user guessed (or was a space), false if not yet guessed 
-		if (gameTracker.letters[i].thisLetter) { // true
-			wordDiv.innerHTML+=thisLetter;
+		// value of the gameTracker.letters[i] object is boolean: true if user guessed (or was a space), false if not yet guessed
+		if (gameTracker.letters[i][thisLetter]) { // true
+			$(wordDiv).append('<span class="letter"> '+thisLetter.toUpperCase()+' </span>');
 			correct++				// track number of correct letters
 			}    
 		else 
-			wordDiv.innerHTML += ' _ ';  // false - show underscore
+			$(wordDiv).append('<span class="letter"> _ </span>');  // false - show underscore
 	}
 
 	// update image hint; height of image div is percent of correct answers
@@ -123,38 +124,57 @@ function updateWord() {
 	// this only works because all the images have the same height/width ratio of 1.5
 	var totalHeight = $(imageHint).prop( "offsetWidth")/1.5;
 	var newHeight = totalHeight*(correct/gameTracker.letters.length);
-	console.log('% correct: '+correct/gameTracker.letters.length);
 	$("#gameImage").css("height",newHeight);
 
 }
 
 function checkKey() {
- 	var userGuess = event.key;
- 	console.log('key: '+userGuess);
+ 	var userGuess = event.key.toLowerCase(); 	
  	
  	// only counts as a guess if is letter
- 	if (userGuess.match(/[a-z]/i)) {
- 		
- 		// decrement gameTracker.guesses
- 		(gameTracker.guesses)--;
- 		$(guessSpan).html(gameTracker.guesses); 
- 		// out of guesses? game over, man!
- 		if (gameTracker.guesses < 0)
- 			gameOver();
+ 	if (userGuess.length == 1 && userGuess.search(/[a-z]/) >-1) {
 
- 		// add letter to "guessed letters" list
- 		$("#guessed").append('<span class="letter">'+userGuess+'</span>');
+ 		// and if it isn't already in the guessed list
+ 		var inList = 0;
+ 		for (var i=0;i<gameTracker.guessed.length;i++) 
+ 			if (gameTracker.guessed[i] == userGuess)
+ 				inList = 1;
 
+ 		// not guessed yet? add this one to the guessed letter array
+ 		if (!inList) {
+ 			gameTracker.guessed.push(userGuess)
+		
+			// now we have an updated array of guessed letters
+ 			// let's clear guessed letters div and update it
+ 			$("#guessed").html(''); 
+ 			for (var i;i<gameTracker.guessed.length;i++) 
+ 				$("#guessed").append('<span class="letter">'+gameTracker.guessed[i]+'</span>');
+
+			}
  		// is this one of our word's letters?
+ 		var badGuess=0;
  		for (var i=0;i<gameTracker.letters.length;i++) {
- 			if (userGuess == Object.keys(gameTracker.letters[i])[0]) {
- 				gameTracker.letters[i] = 1;
- 				updateWord();
- 			}
- 		}
+ 			if (Object.keys(gameTracker.letters[i])[0]==userGuess) { 
+ 				gameTracker.letters[i][userGuess] = 1;
+ 				badGuess=0
+ 				}
+ 			else
+ 				badGuess=1;
+ 			}	
+ 		updateWord();
+ 		
+ 		if (badGuess) 
+			// letter was not a match; decrement guesses remaining
+			gameTracker.guesses--;
+			
+		// out of guesses? game over, man!
+		if (gameTracker.guesses < 0)
+			gameOver()
 
- 	}  // end is-letter code
- 	
+		// otherwise, update guesses remaining
+		else 
+			$(guessSpan).html(gameTracker.guesses); 
+ 	}  // end is-valid-key code
 }  // end checkKey() function
 
 function gameOver(){
